@@ -144,5 +144,239 @@
     .frame-9 { background: linear-gradient(135deg, #ff9a9e, #fecfef); box-shadow: 0 0 18px rgba(255,154,158,0.7); }
 
     #fotoCumple {
-      border
+      border-radius: 18px;
+      border: 3px solid rgba(255,255,255,0.95);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.45);
+      width: auto;
+      height: auto;
+      max-width: min(100%, 340px);
+      max-height: 45vh;
+      object-fit: contain;
+      transition: width 0.2s ease, height 0.2s ease, opacity 0.3s ease;
+      background: #0003;
+    }
 
+    .details {
+      font-size: 0.96rem;
+      color: #e0e7ff;
+      margin-bottom: 18px;
+      line-height: 1.5;
+    }
+    .details strong {
+      color: #ffdf6b;
+    }
+
+    /* Botón confirmar con parpadeo sutil */
+    .btn-confirm {
+      display: inline-block;
+      width: 100%;
+      max-width: 260px;
+      padding: 12px 20px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #ffdf6b, #ff914d);
+      color: #1c2541;
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45);
+      animation: pulse 1.6s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%   { transform: scale(1);   box-shadow: 0 10px 24px rgba(0,0,0,0.45); }
+      50%  { transform: scale(1.03); box-shadow: 0 12px 26px rgba(255,223,107,0.6); }
+      100% { transform: scale(1);   box-shadow: 0 10px 24px rgba(0,0,0,0.45); }
+    }
+
+    /* Confeti */
+    .confetti-piece {
+      position: fixed;
+      width: 8px;
+      height: 14px;
+      background: red;
+      top: -20px;
+      opacity: 0;
+      z-index: 9999;
+      animation: confettiFall 2.4s linear forwards;
+    }
+    @keyframes confettiFall {
+      0%   { opacity: 1; transform: translateY(0) rotateZ(0deg); }
+      100% { opacity: 0; transform: translateY(120vh) rotateZ(360deg); }
+    }
+
+    /* Música: sin icono visible (elemento oculto) */
+    audio {
+      display: none;
+    }
+
+    @media (max-width: 480px) {
+      .card {
+        padding: 18px 14px 22px;
+      }
+      .title {
+        font-size: 1.4rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Fondo dinámico + overlay -->
+  <div class="bg-dynamic" id="bgDynamic"></div>
+  <div class="bg-overlay"></div>
+
+  <!-- Tarjeta 3D -->
+  <div class="scene">
+    <div class="card">
+      <h1 class="title">
+        Estas invitado a esta gran celebración para Rebeca Abiagil Mendez Mendez para celebrarle sus 25 Añostes.
+      </h1>
+
+      <!-- Marco + foto -->
+      <div id="photoFrame" class="photo-frame frame-0">
+        <img id="fotoCumple" src="foto1.jpg" alt="Foto de Rebeca" />
+      </div>
+
+      <p class="details">
+        Te invito a celebrar conmigo este día especial 🎉<br>
+        <strong>Fecha:</strong> Domingo 14 de diciembre<br>
+        <strong>Hora:</strong> De 4 de la tarde hasta que el cuerpo aguante
+      </p>
+
+      <button id="btnConfirm" class="btn-confirm">
+        Confirmar asistencia
+      </button>
+    </div>
+  </div>
+
+  <!-- Música (sin icono, autoplay + loop) -->
+  <audio id="music" src="musica.mp3" autoplay loop></audio>
+
+  <script>
+    // ========================
+    // Globos dinámicos
+    // ========================
+    function crearGlobos() {
+      for (let i = 0; i < 12; i++) {
+        const b = document.createElement("div");
+        b.classList.add("balloon");
+        const delay = Math.random() * 8;
+        const left = Math.random() * 100;
+        const hue = Math.floor(Math.random() * 360);
+
+        b.style.left = left + "vw";
+        b.style.animationDelay = delay + "s";
+        b.style.background = "radial-gradient(circle at 30% 20%, #fff, hsl(" + hue + ", 80%, 60%))";
+        document.body.appendChild(b);
+      }
+    }
+    crearGlobos();
+
+    // ========================
+    // Carrusel de fotos
+    // ========================
+    const fotos = [
+      "foto1.jpg",
+      "foto2.jpg",
+      "foto3.jpg",
+      "foto4.jpg",
+      "foto5.jpg",
+      "foto6.jpg",
+      "foto7.jpg",
+      "foto8.jpg",
+      "foto9.jpg",
+      "foto10.jpg"
+    ];
+
+    const foto = document.getElementById("fotoCumple");
+    const frame = document.getElementById("photoFrame");
+    const bg = document.getElementById("bgDynamic");
+    let indice = 0;
+
+    function mostrarFotoActual() {
+      const rutaActual = fotos[indice];
+      const siguienteIndice = (indice + 1) % fotos.length;
+      const rutaSiguiente = fotos[siguienteIndice];
+
+      const nuevaImg = new Image();
+      nuevaImg.src = rutaActual;
+
+      nuevaImg.onload = function () {
+        const maxAncho = Math.min(window.innerWidth * 0.9, 340);
+        const maxAlto = window.innerHeight * 0.45;
+
+        let ancho = nuevaImg.width;
+        let alto = nuevaImg.height;
+
+        const ratio = Math.min(maxAncho / ancho, maxAlto / alto, 1);
+
+        ancho = ancho * ratio;
+        alto = alto * ratio;
+
+        foto.style.width  = ancho + "px";
+        foto.style.height = alto + "px";
+        foto.src = rutaActual;
+      };
+
+      // Cambiar marco según índice
+      frame.className = "photo-frame frame-" + (indice % 10);
+
+      // Fondo dinámico con la siguiente foto
+      bg.style.backgroundImage =
+        "linear-gradient(135deg, rgba(0,0,40,0.9), rgba(0,0,0,0.9)), url('" +
+        rutaSiguiente +
+        "')";
+    }
+
+    function cambiarFoto() {
+      indice = (indice + 1) % fotos.length;
+      mostrarFotoActual();
+    }
+
+    // Iniciar carrusel (5 segundos por foto)
+    mostrarFotoActual();
+    setInterval(cambiarFoto, 5000);
+
+    // ========================
+    // Confeti al confirmar
+    // ========================
+    function lanzarConfeti() {
+      const colores = ["#ff4f7d", "#ffdf6b", "#6af0ff", "#9bffb8", "#ffffff"];
+      const cantidad = 160;
+
+      for (let i = 0; i < cantidad; i++) {
+        const c = document.createElement("div");
+        c.classList.add("confetti-piece");
+
+        const size  = 6 + Math.random() * 6;
+        const left  = Math.random() * 100;
+        const delay = Math.random() * 0.8;
+        const color = colores[Math.floor(Math.random() * colores.length)];
+
+        c.style.width           = size + "px";
+        c.style.height          = (size * 1.5) + "px";
+        c.style.left            = left + "vw";
+        c.style.background      = color;
+        c.style.animationDelay  = delay + "s";
+
+        document.body.appendChild(c);
+        setTimeout(() => c.remove(), 2600);
+      }
+    }
+
+    const btnConfirm = document.getElementById("btnConfirm");
+    btnConfirm.addEventListener("click", function () {
+      lanzarConfeti();
+      // Mostrar confeti y luego abrir la nueva pestaña
+      setTimeout(() => {
+        window.open("evento.html", "_blank", "noopener");
+      }, 400);
+    });
+
+    // Nota: algunos navegadores (sobre todo en móvil)
+    // pueden bloquear el autoplay de música hasta que el usuario
+    // haga alguna interacción (tap, scroll, click). El código está
+    // listo para reproducirla automáticamente cuando se permita.
+  </script>
+</body>
+</html>
