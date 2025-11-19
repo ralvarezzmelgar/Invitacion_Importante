@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Detalles del evento - Rebeca</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      background: radial-gradient(circle at top, #003c7a, #000814);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 16px;
+      color: #fff;
+    }
+
+    .wrapper {
+      width: 100%;
+      max-width: 520px;
+      background: rgba(3, 13, 45, 0.92);
+      border-radius: 20px;
+      padding: 20px 18px 26px;
+      box-shadow: 0 14px 36px rgba(0,0,0,0.7);
+      margin: 16px 0;
+      border: 1px solid rgba(255,255,255,0.18);
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 1.7rem;
+      color: #ffdf6b;
+      text-align: center;
+    }
+
+    h2 {
+      margin: 14px 0 8px;
+      font-size: 1.2rem;
+      color: #ffdf6b;
+    }
+
+    p {
+      margin: 4px 0 10px;
+      color: #e5ecff;
+      font-size: 0.96rem;
+    }
+
+    .info {
+      margin-bottom: 10px;
+    }
+
+    .countdown {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      margin: 12px 0 18px;
+      flex-wrap: wrap;
+    }
+
+    .count-box {
+      flex: 1;
+      text-align: center;
+      background: linear-gradient(135deg, #1b1f3a, #2b2f5e);
+      color: #fff;
+      border-radius: 12px;
+      padding: 10px 6px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+      min-width: 80px;
+    }
+
+    .count-box span {
+      display: block;
+    }
+
+    .count-number {
+      font-size: 1.4rem;
+      font-weight: 800;
+    }
+
+    .count-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      opacity: 0.9;
+    }
+
+    .map-container {
+      margin-top: 8px;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.2);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.65);
+    }
+
+    iframe {
+      width: 100%;
+      height: 280px;
+      border: 0;
+    }
+
+    .map-link {
+      margin-top: 8px;
+      font-size: 0.9rem;
+    }
+
+    .map-link a {
+      color: #6af0ff;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .map-link a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 480px) {
+      .count-box {
+        flex: 0 0 48%;
+        margin-bottom: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <h1>Detalles del evento 🎉</h1>
+
+    <div class="info">
+      <p><strong>Evento:</strong> Cumpleaños de Rebeca Abiagil Mendez Mendez</p>
+      <p><strong>Edad:</strong> 25 años</p>
+      <p><strong>Fecha:</strong> Domingo 14 de diciembre de 2025</p>
+      <p><strong>Hora:</strong> De 4 de la tarde hasta que el cuerpo aguante</p>
+      <p><strong>Dirección:</strong> 8 ave. 1-72 zona 1, San Miguel Petapa, San Miguel Petapa, Guatemala</p>
+    </div>
+
+    <h2>Cuenta regresiva</h2>
+    <p>Falta esto para el gran día:</p>
+
+    <div class="countdown">
+      <div class="count-box">
+        <span id="days" class="count-number">0</span>
+        <span class="count-label">Días</span>
+      </div>
+      <div class="count-box">
+        <span id="hours" class="count-number">0</span>
+        <span class="count-label">Horas</span>
+      </div>
+      <div class="count-box">
+        <span id="minutes" class="count-number">0</span>
+        <span class="count-label">Min</span>
+      </div>
+      <div class="count-box">
+        <span id="seconds" class="count-number">0</span>
+        <span class="count-label">Seg</span>
+      </div>
+    </div>
+
+    <h2>Cómo llegar</h2>
+    <p>Puedes ver la ubicación exacta del evento en Google Maps:</p>
+
+    <div class="map-container">
+      <!-- Mapa: usamos la dirección; además abajo va tu link directo -->
+      <iframe
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        src="https://www.google.com/maps?q=8%20ave.%201-72%20zona%201,%20San%20Miguel%20Petapa,%20Guatemala&output=embed"
+      ></iframe>
+    </div>
+
+    <p class="map-link">
+      También puedes abrirlo directamente en Google Maps:<br>
+      <a href="https://maps.app.goo.gl/pdiK2Jp15uZ1J7eo8" target="_blank" rel="noopener">
+        Ver en Google Maps
+      </a>
+    </p>
+  </div>
+
+  <script>
+    // Cuenta regresiva para el 14 de diciembre de 2025
+    // Ajusta la hora si quieres otra (aquí 16:00 = 4 pm)
+    const targetDate = new Date("December 14, 2025 16:00:00").getTime();
+
+    const daysEl = document.getElementById("days");
+    const hoursEl = document.getElementById("hours");
+    const minutesEl = document.getElementById("minutes");
+    const secondsEl = document.getElementById("seconds");
+
+    function actualizarCuenta() {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      if (distance <= 0) {
+        daysEl.textContent = "0";
+        hoursEl.textContent = "0";
+        minutesEl.textContent = "0";
+        secondsEl.textContent = "0";
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor(
+        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
+      const minutes = Math.floor(
+        (distance % (1000 * 60 * 60)) / (1000 * 60)
+      );
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      daysEl.textContent = days;
+      hoursEl.textContent = hours;
+      minutesEl.textContent = minutes;
+      secondsEl.textContent = seconds;
+    }
+
+    actualizarCuenta();
+    setInterval(actualizarCuenta, 1000);
+  </script>
+</body>
+</html>
