@@ -17,19 +17,38 @@
       padding: 24px 16px 32px;
       color: #4b1640;
       position: relative;
-      background: #ffeaf4; /* ROSADO CLARO DE FONDO */
+      background: #ffeaf4;
       overflow-x: hidden;
-      overflow-y: auto; /* permite desplazarse arriba y abajo */
+      overflow-y: auto;
     }
+
+    .bg-dynamic {
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      background-size: cover;
+      background-position: center;
+      filter: blur(14px) brightness(0.9);
+      transform: scale(1.05);
+      transition:
+        transform 2.4s ease-in-out,
+        background-image 0.8s ease-out;
+      opacity: 0.55;
+    }
+    .bg-zoom { transform: scale(1.12); }
 
     .bg-overlay {
       position: fixed;
       inset: 0;
       z-index: -2;
-      background: radial-gradient(circle at top, rgba(255,255,255,0.7), rgba(255,192,224,0.5));
+      background: radial-gradient(
+        circle at top,
+        rgba(255,255,255,0.7),
+        rgba(255,192,224,0.5)
+      );
     }
 
-    /* Globos rosados */
+    /* Globos */
     .balloon {
       position: fixed;
       bottom: -120px;
@@ -52,19 +71,18 @@
       transform: translateX(-50%);
     }
     @keyframes floatUp {
-      0%   { transform: translateY(0) translateX(0);   opacity: 0; }
+      0%   { transform: translateY(0) translateX(0); opacity: 0; }
       10%  { opacity: 1; }
       90%  { opacity: 1; }
       100% { transform: translateY(-120vh) translateX(25px); opacity: 0; }
     }
 
-    /* Tarjeta con movimiento suave */
+    /* Tarjeta */
     .card-wrapper {
       width: 100%;
       max-width: 480px;
       animation: cardFloatEvent 9s ease-in-out infinite alternate;
     }
-
     @keyframes cardFloatEvent {
       0%   { transform: translateY(0) rotateX(3deg) rotateY(-3deg); }
       50%  { transform: translateY(-6px) rotateX(-2deg) rotateY(3deg); }
@@ -72,7 +90,6 @@
     }
 
     .card {
-      position: relative;
       width: 100%;
       padding: 22px 18px 24px;
       background: linear-gradient(135deg, #ffffff, #ffe0f3);
@@ -83,40 +100,20 @@
       color: #4b1640;
     }
 
-    h1 {
-      margin: 0 0 8px;
-      font-size: 1.6rem;
-      color: #c21888;
-    }
+    h1 { margin: 0 0 8px; font-size: 1.6rem; color: #c21888; }
+    h2 { margin: 14px 0 6px; font-size: 1.1rem; color: #c21888; text-transform: uppercase; letter-spacing: 0.08em; }
 
-    h2 {
-      margin: 14px 0 6px;
-      font-size: 1.1rem;
-      color: #c21888;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
+    p { margin: 4px 0; font-size: 0.95rem; color: #5b244a; }
+    .highlight { color: #e91e63; font-weight: 600; }
 
-    p {
-      margin: 4px 0;
-      font-size: 0.95rem;
-      color: #5b244a;
-    }
-
-    .highlight {
-      color: #e91e63;
-      font-weight: 600;
-    }
-
-    /* Contador grande */
+    /* Contador */
     .countdown {
-      margin: 14px 0 18px;
+      margin: 14px 0 8px;
       display: flex;
       justify-content: center;
       gap: 10px;
       flex-wrap: wrap;
     }
-
     .time-box {
       min-width: 70px;
       padding: 8px 10px;
@@ -125,17 +122,40 @@
       box-shadow: 0 10px 24px rgba(0,0,0,0.4);
       color: #ffebff;
     }
-    .time-value {
-      font-size: 1.4rem;
-      font-weight: 800;
-      line-height: 1.1;
+    .time-value { font-size: 1.4rem; font-weight: 800; }
+    .time-label { font-size: 0.7rem; text-transform: uppercase; color: #ffe0f5; }
+
+    /* Texto de agradecimiento con corazón */
+    .thanks {
+      margin-top: 18px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #c21888;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      opacity: 0;
+      transform: translateY(10px);
+      animation: thanksFade 1.4s ease-out forwards;
     }
-    .time-label {
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      margin-top: 2px;
-      color: #ffe0f5;
+    .thanks-heart {
+      display: inline-block;
+      font-size: 1.2rem;
+      animation: heartBeat 1.1s ease-in-out infinite;
+      transform-origin: center;
+    }
+
+    @keyframes thanksFade {
+      0% { opacity: 0; transform: translateY(12px); }
+      60% { opacity: 0.7; transform: translateY(4px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes heartBeat {
+      0%   { transform: scale(1); }
+      25%  { transform: scale(1.25); }
+      40%  { transform: scale(1); }
+      60%  { transform: scale(1.18); }
+      100% { transform: scale(1); }
     }
 
     /* Mapa */
@@ -166,12 +186,16 @@
     }
 
     @media (max-width: 480px) {
-      .card { padding: 18px 14px 22px; }
-      h1 { font-size: 1.4rem; }
+      .countdown { flex-wrap: nowrap; gap: 4px; }
+      .time-box { padding: 6px 4px; flex: 1; }
+      .time-value { font-size: 1.1rem; }
+      .time-label { font-size: 0.6rem; }
     }
   </style>
 </head>
 <body>
+
+  <div class="bg-dynamic" id="bgDynamicEvent"></div>
   <div class="bg-overlay"></div>
 
   <div class="card-wrapper">
@@ -208,7 +232,6 @@
 
       <h2>Ubicación en mapa</h2>
       <div class="map-wrapper">
-        <!-- Mapa apuntando al link proporcionado -->
         <iframe
           loading="lazy"
           referrerpolicy="no-referrer-when-downgrade"
@@ -216,19 +239,20 @@
         </iframe>
       </div>
 
-      <a
-        class="btn-maps"
-        href="https://maps.app.goo.gl/1vXapDwXat1Ephuu8"
-        target="_blank"
-        rel="noopener"
-      >
+      <a class="btn-maps"
+         href="https://maps.app.goo.gl/1vXapDwXat1Ephuu8"
+         target="_blank" rel="noopener">
         Abrir en Google Maps
       </a>
+
+      <p class="thanks">
+        <span class="thanks-heart">💖</span>
+        ¡Gracias por haber confirmado, sin ti nuestra celebración no sería igual!
+      </p>
     </div>
   </div>
 
   <script>
-    // Globos rosados
     function crearGlobos() {
       for (let i = 0; i < 12; i++) {
         const b = document.createElement("div");
@@ -239,15 +263,32 @@
         b.style.left = left + "vw";
         b.style.animationDelay = delay + "s";
         b.style.background =
-          "radial-gradient(circle at 30% 20%, #fff, hsl(" +
-          hue +
-          ", 80%, 65%))";
+          "radial-gradient(circle at 30% 20%, #fff, hsl(" + hue + ", 80%, 65%))";
         document.body.appendChild(b);
       }
     }
     crearGlobos();
 
-    // Contador hacia el 14 de diciembre de 2025, 16:00
+    const fotosEvento = [
+      "foto1.jpg","foto2.jpg","foto3.jpg","foto4.jpg","foto5.jpg",
+      "foto6.jpg","foto7.jpg","foto8.jpg","foto9.jpg","foto10.jpg"
+    ];
+    const bgEv = document.getElementById("bgDynamicEvent");
+    let idxEv  = 0;
+
+    function actualizarFondoEvento() {
+      const siguiente = fotosEvento[(idxEv + 1) % fotosEvento.length];
+      bgEv.style.backgroundImage =
+        "linear-gradient(135deg, rgba(255,200,230,0.8), rgba(255,234,244,0.9)), url('" +
+        siguiente + "')";
+      bgEv.classList.add("bg-zoom");
+      setTimeout(() => bgEv.classList.remove("bg-zoom"), 2400);
+      idxEv = (idxEv + 1) % fotosEvento.length;
+    }
+
+    actualizarFondoEvento();
+    setInterval(actualizarFondoEvento, 5000);
+
     const dEl = document.getElementById("cd-days");
     const hEl = document.getElementById("cd-hours");
     const mEl = document.getElementById("cd-mins");
