@@ -21,7 +21,7 @@
       background: #ffeaf4; /* ROSADO CLARO DE FONDO */
     }
 
-    /* Fondo dinámico con la siguiente foto difuminada */
+    /* Fondo simple (con la siguiente foto, sin animaciones raras) */
     .bg-dynamic {
       position: fixed;
       inset: 0;
@@ -29,16 +29,19 @@
       background-size: cover;
       background-position: center;
       filter: blur(14px) brightness(0.9);
-      transform: scale(1.05);
-      transition: background-image 0.8s ease-out;
       opacity: 0.55;
+      transition: background-image 0.8s ease-out;
     }
 
     .bg-overlay {
       position: fixed;
       inset: 0;
       z-index: -2;
-      background: radial-gradient(circle at top, rgba(255,255,255,0.7), rgba(255,192,224,0.5));
+      background: radial-gradient(
+        circle at top,
+        rgba(255,255,255,0.7),
+        rgba(255,192,224,0.5)
+      );
     }
 
     /* Globos rosados que suben */
@@ -95,11 +98,10 @@
       100% { transform: rotateY(0deg)  rotateX(2deg)  translateY(0); }
     }
 
-    /* Tarjeta frontal (blanco con rosado, sin reverso) */
+    /* Tarjeta frontal */
     .card-front {
       position: relative;
       padding: 22px 18px 26px;
-      background: linear-gradient(135deg, #ffffff, #ffe0f3);
       border-radius: 24px;
       box-shadow: 0 18px 40px rgba(0,0,0,0.25);
       border: 1px solid rgba(255,180,220,0.7);
@@ -108,24 +110,29 @@
       align-items: center;
       text-align: center;
       color: #4b1640;
+      background: linear-gradient(135deg, #ffffff, #ffe0f3);
     }
 
-    .title {
-      font-size: 1.6rem;
-      margin: 0 0 10px;
+    /* Bloque con la info del evento */
+    .info-block {
+      margin-bottom: 14px;
+      font-size: 0.95rem;
+      line-height: 1.4;
+      color: #5b244a;
+    }
+    .info-block strong {
       color: #c21888;
-      font-weight: 800;
-      letter-spacing: 0.02em;
     }
 
-    /* Marco decorativo rosado/morado según foto */
+    /* Marco decorativo sencillo */
     .photo-frame {
       margin: 0 auto 16px;
       padding: 8px;
       border-radius: 22px;
       display: inline-block;
       position: relative;
-      transition: background 0.5s ease, box-shadow 0.5s ease;
+      background: linear-gradient(135deg,#ff9ad5,#ffe3fb);
+      box-shadow: 0 0 18px rgba(255,154,213,0.6);
     }
     .photo-frame::before {
       content: "";
@@ -135,17 +142,6 @@
       border: 2px dashed rgba(255,130,190,0.7);
       pointer-events: none;
     }
-
-    .frame-0 { background: linear-gradient(135deg,#ff9ad5,#ffe3fb); box-shadow: 0 0 18px rgba(255,154,213,0.6); }
-    .frame-1 { background: linear-gradient(135deg,#ffc1e3,#ff9ad5); box-shadow: 0 0 18px rgba(255,193,227,0.6); }
-    .frame-2 { background: linear-gradient(135deg,#f8b0ff,#b388ff); box-shadow: 0 0 18px rgba(179,136,255,0.6); }
-    .frame-3 { background: linear-gradient(135deg,#ffb4c8,#ffe6e9); box-shadow: 0 0 18px rgba(255,180,200,0.6); }
-    .frame-4 { background: linear-gradient(135deg,#ff9ab5,#ffb6d9); box-shadow: 0 0 18px rgba(255,154,181,0.6); }
-    .frame-5 { background: linear-gradient(135deg,#ffdfef,#f3c7ff); box-shadow: 0 0 18px rgba(243,199,255,0.6); }
-    .frame-6 { background: linear-gradient(135deg,#ffd1f2,#ff8ac9); box-shadow: 0 0 18px rgba(255,138,201,0.6); }
-    .frame-7 { background: linear-gradient(135deg,#fbb1d9,#ffcedf); box-shadow: 0 0 18px rgba(251,177,217,0.6); }
-    .frame-8 { background: linear-gradient(135deg,#e5c3ff,#ffc7f5); box-shadow: 0 0 18px rgba(229,195,255,0.6); }
-    .frame-9 { background: linear-gradient(135deg,#ffb3cf,#ffd5ec); box-shadow: 0 0 18px rgba(255,179,207,0.6); }
 
     #fotoCumple {
       border-radius: 18px;
@@ -157,6 +153,7 @@
       max-height: 45vh;
       object-fit: contain;
       background: #0003;
+      /* sin animaciones de zoom ni opacidad */
     }
 
     .btn-confirm {
@@ -241,7 +238,7 @@
     }
 
     @media (max-width: 480px) {
-      .title { font-size: 1.4rem; }
+      .info-block { font-size: 0.9rem; }
     }
   </style>
 </head>
@@ -260,15 +257,20 @@
   <div id="scene" class="scene scene-hidden">
     <div class="card-shell">
       <div class="card-front">
-        <h1 class="title">
-          Estas invitado a esta gran celebración para Rebeca Abiagil Mendez Mendez para celebrarle sus 25 Años
-        </h1>
+        <!-- Texto principal del evento -->
+        <div class="info-block">
+          <p><strong>¡Estás invitado a celebrar los 25 años de Rebeca!</strong></p>
+          <p>Fecha: 14 de diciembre.</p>
+          <p>Lugar: Salón Estrada, 8 ave. 1-72 zona 1, San Miguel Petapa.</p>
+          <p>Dará inicio a las 4 de la tarde.</p>
+          <p><strong>¡No puedes faltar!</strong></p>
+        </div>
 
-        <div id="photoFrame" class="photo-frame frame-0">
+        <div id="photoFrame" class="photo-frame">
           <img id="fotoCumple" src="foto1.jpg" alt="Foto de Rebeca" />
         </div>
 
-        <button class="btn-confirm">Ver Detalles</button>
+        <button class="btn-confirm">Confirmar asistencia</button>
       </div>
     </div>
   </div>
@@ -312,15 +314,16 @@
     }
     intro.addEventListener("click", abrirInvitacion);
 
-    // Carrusel de fotos
+    // Carrusel de fotos: automático + swipe táctil
     const fotos = [
       "foto1.jpg","foto2.jpg","foto3.jpg","foto4.jpg","foto5.jpg",
       "foto6.jpg","foto7.jpg","foto8.jpg","foto9.jpg","foto10.jpg"
     ];
-    const foto = document.getElementById("fotoCumple");
-    const frame = document.getElementById("photoFrame");
-    const bg   = document.getElementById("bgDynamic");
-    let indice = 0;
+    const foto  = document.getElementById("fotoCumple");
+    const bg    = document.getElementById("bgDynamic");
+    const zonaDesliz = document.getElementById("photoFrame");
+    let indice  = 0;
+    let carruselInterval = null;
 
     function mostrarFotoActual() {
       const actual    = fotos[indice];
@@ -345,20 +348,63 @@
         foto.src = actual;
       };
 
-      frame.className = "photo-frame frame-" + (indice % 10);
+      // Fondo difuminado de la página con la siguiente foto
       bg.style.backgroundImage =
         "linear-gradient(135deg, rgba(255,200,230,0.8), rgba(255,234,244,0.9)), url('" +
         siguiente +
         "')";
     }
 
-    function cambiarFoto() {
-      indice = (indice + 1) % fotos.length;
+    function cambiarFoto(direccion = 1) {
+      indice = (indice + direccion + fotos.length) % fotos.length;
       mostrarFotoActual();
     }
 
+    function iniciarCarrusel() {
+      if (carruselInterval) clearInterval(carruselInterval);
+      carruselInterval = setInterval(() => cambiarFoto(1), 6000); // 6 segundos
+    }
+
+    // Controles táctiles (swipe)
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    function manejarSwipe() {
+      const diffX = touchEndX - touchStartX;
+      const umbral = 50; // píxeles mínimos para considerar swipe
+
+      if (Math.abs(diffX) > umbral) {
+        // detener y reiniciar el carrusel al interactuar
+        if (carruselInterval) clearInterval(carruselInterval);
+
+        if (diffX < 0) {
+          // swipe hacia la izquierda -> siguiente foto
+          cambiarFoto(1);
+        } else {
+          // swipe hacia la derecha -> foto anterior
+          cambiarFoto(-1);
+        }
+
+        iniciarCarrusel();
+      }
+    }
+
+    zonaDesliz.addEventListener("touchstart", (e) => {
+      if (e.touches && e.touches.length > 0) {
+        touchStartX = e.touches[0].clientX;
+      }
+    }, { passive: true });
+
+    zonaDesliz.addEventListener("touchend", (e) => {
+      if (e.changedTouches && e.changedTouches.length > 0) {
+        touchEndX = e.changedTouches[0].clientX;
+        manejarSwipe();
+      }
+    }, { passive: true });
+
+    // Inicializar carrusel
     mostrarFotoActual();
-    setInterval(cambiarFoto, 5000);
+    iniciarCarrusel();
 
     // Confeti + abrir evento.html
     function lanzarConfeti() {
@@ -392,5 +438,4 @@
   </script>
 </body>
 </html>
-
 
