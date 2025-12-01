@@ -125,9 +125,19 @@
     .time-value { font-size: 1.4rem; font-weight: 800; }
     .time-label { font-size: 0.7rem; text-transform: uppercase; color: #ffe0f5; }
 
-    /* Texto de agradecimiento con corazón */
+    /* Línea separadora suave */
+    .separator {
+      margin: 10px auto 4px;
+      width: 80%;
+      height: 1px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, transparent, #f48fb1, transparent);
+      opacity: 0.8;
+    }
+
+    /* Texto de agradecimiento con corazón + brillo suave */
     .thanks {
-      margin-top: 18px;
+      margin-top: 8px;
       font-size: 0.95rem;
       font-weight: 600;
       color: #c21888;
@@ -136,7 +146,9 @@
       gap: 6px;
       opacity: 0;
       transform: translateY(10px);
-      animation: thanksFade 1.4s ease-out forwards;
+      animation:
+        thanksFade 1.4s ease-out forwards,
+        glowPulse 2.2s ease-in-out infinite 1.4s;
     }
     .thanks-heart {
       display: inline-block;
@@ -156,6 +168,19 @@
       40%  { transform: scale(1); }
       60%  { transform: scale(1.18); }
       100% { transform: scale(1); }
+    }
+    @keyframes glowPulse {
+      0% {
+        text-shadow: 0 0 0px rgba(255,143,177,0.0);
+      }
+      50% {
+        text-shadow:
+          0 0 6px rgba(255,143,177,0.6),
+          0 0 12px rgba(255,204,229,0.5);
+      }
+      100% {
+        text-shadow: 0 0 0px rgba(255,143,177,0.0);
+      }
     }
 
     /* Mapa */
@@ -227,6 +252,13 @@
         </div>
       </div>
 
+      <!-- Línea separadora + mensaje de agradecimiento debajo del contador -->
+      <div class="separator"></div>
+      <p class="thanks">
+        <span class="thanks-heart">💖</span>
+        ¡Gracias por haber confirmado, sin ti nuestra celebración no sería igual! 🎉
+      </p>
+
       <h2>Dirección</h2>
       <p>8 ave. 1-72 zona 1, San Miguel Petapa, San Miguel Petapa, Guatemala</p>
 
@@ -244,11 +276,6 @@
          target="_blank" rel="noopener">
         Abrir en Google Maps
       </a>
-
-      <p class="thanks">
-        <span class="thanks-heart">💖</span>
-        ¡Gracias por haber confirmado, sin ti nuestra celebración no sería igual!
-      </p>
     </div>
   </div>
 
